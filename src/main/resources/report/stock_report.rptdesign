@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">版权所有 (c) 2008 &lt;&lt;MixNews>></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[spring=reportContext.getAppContext().get("spring");
+var stockDataService=spring.getBean("stockDataService");]]></method>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <data-sources>
+        <script-data-source name="srcStocks" id="35"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="dataSetSocks" id="36">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">columnDate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">columnOpen</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">columnHign</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">columnLow</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">columnClose</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">columnVolume</property>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">columnDate</property>
+                    <text-property name="displayName">Date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">columnOpen</property>
+                    <text-property name="displayName">Open</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">columnHign</property>
+                    <text-property name="displayName">Hign</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">columnLow</property>
+                    <text-property name="displayName">Low</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">columnClose</property>
+                    <text-property name="displayName">Close</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">columnVolume</property>
+                    <text-property name="displayName">Volume</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">columnDate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">columnOpen</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">columnHign</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">columnLow</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">columnClose</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">columnVolume</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">srcStocks</property>
+            <method name="open"><![CDATA[var stockDataService=spring.getBean("stockDataService");
+listdata = stockDataService.getStockValues("company");
+count=0;
+
+]]></method>
+            <method name="fetch"><![CDATA[if(count < listdata.size()){
+	   count++;
+       row["columnDate"] = listdata.get(count).getDate();
+       row["columnOpen"] = listdata.get(count).getOpen();
+       row["columnHigh"] = listdata.get(count).getHigh();
+       row["columnLow"] = listdata.get(count).getLow();
+       row["columnClose"] = listdata.get(count).getClose();
+       row["columnVolume"] = listdata.get(count).getVolume();
+       return true;
+}
+
+return false;]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="37">
+            <property name="dataSet">dataSetSocks</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">columnDate</property>
+                    <text-property name="displayName">Date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["columnDate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">columnOpen</property>
+                    <text-property name="displayName">Open</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["columnOpen"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">columnHign</property>
+                    <text-property name="displayName">Hign</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["columnHign"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">columnLow</property>
+                    <text-property name="displayName">Low</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["columnLow"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">columnClose</property>
+                    <text-property name="displayName">Close</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["columnClose"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">columnVolume</property>
+                    <text-property name="displayName">Volume</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["columnVolume"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <column id="71"/>
+            <column id="72"/>
+            <column id="73"/>
+            <column id="74"/>
+            <column id="75"/>
+            <column id="76"/>
+            <header>
+                <row id="38">
+                    <cell id="39">
+                        <label id="40">
+                            <text-property name="text">Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="41">
+                        <label id="42">
+                            <text-property name="text">Open</text-property>
+                        </label>
+                    </cell>
+                    <cell id="43">
+                        <label id="44">
+                            <text-property name="text">Hign</text-property>
+                        </label>
+                    </cell>
+                    <cell id="45">
+                        <label id="46">
+                            <text-property name="text">Low</text-property>
+                        </label>
+                    </cell>
+                    <cell id="47">
+                        <label id="48">
+                            <text-property name="text">Close</text-property>
+                        </label>
+                    </cell>
+                    <cell id="49">
+                        <label id="50">
+                            <text-property name="text">Volume</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="51">
+                    <cell id="52">
+                        <data id="53">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">columnDate</property>
+                        </data>
+                    </cell>
+                    <cell id="54">
+                        <data id="55">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">columnOpen</property>
+                        </data>
+                    </cell>
+                    <cell id="56">
+                        <data id="57">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">columnHign</property>
+                        </data>
+                    </cell>
+                    <cell id="58">
+                        <data id="59">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">columnLow</property>
+                        </data>
+                    </cell>
+                    <cell id="60">
+                        <data id="61">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">columnClose</property>
+                        </data>
+                    </cell>
+                    <cell id="62">
+                        <data id="63">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">columnVolume</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="64">
+                    <cell id="65"/>
+                    <cell id="66"/>
+                    <cell id="67"/>
+                    <cell id="68"/>
+                    <cell id="69"/>
+                    <cell id="70"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>
