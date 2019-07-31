@@ -11,9 +11,9 @@ spring:
     name: ${application.product}-${application.module}-${application.name}
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.97.104.203:3306/firstboot?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: Radiant123
+    url: #########
+    username: ########
+    password: ##########
     #初始化连接数量，最大最小连接数
     initialSize: 5
     maxActive: 10
